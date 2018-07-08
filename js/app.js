@@ -56,7 +56,7 @@ function cardClick(evt){
 					opened = [];
 					flag = true;
 					if(matchCounter === 8){
-						alert("YoU WiN!!!");
+						alert("You win in " + movesCounter + " moves");
 					}
 				}, 500);
 			} else {

@@ -70,6 +70,21 @@ h1 {
     cursor: default;
 }
 
+/*Fail animation*/
+@keyframes shakeF{
+	0% {transform: rotate(0deg);}
+	33% {transform: rotate(45deg);}
+	66% {transform: rotate(-45deg);}
+	100% {transform: rotate(0deg);}
+}
+
+/*Match animation*/
+@keyframes shakeM{
+	0% {margin-top: 0px;}
+	50% {margin-top: -30px}
+	100% {margin-top: 0px}
+}
+
 .deck .card.show {
     font-size: 33px;
 }
@@ -78,7 +93,18 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+    animation-name: shakeM;
+    animation-duration: 0.5s;
 }
+
+.deck .card.fail {
+    cursor: default;
+    background: #FF0F00B4 ;
+    font-size: 33px;
+    animation-name: shakeF;
+    animation-duration: 0.5s;
+}
+
 
 /*
  * Styles for the Score Panel

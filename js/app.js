@@ -10,6 +10,18 @@
  *   - add each card's HTML to the page
  */
 
+const cards = document.querySelectorAll(".card");
+const deck = document.querySelector(".deck");
+const moves = document.querySelector(".moves");
+const restart = document.querySelector(".restart");
+const stars = document.querySelector(".stars");
+let opened = [];
+let movesCounter = 0;
+//this flag will not allow user to click on cards while animation is performing
+let flag = true;
+
+let matchCounter = 0;
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -25,17 +37,76 @@ function shuffle(array) {
     return array;
 }
 
-//creating a list that holds all cards
-const cards = document.querySelectorAll(".card");
-const deck = document.querySelector(".deck");
-
-
-
-deck.addEventListener("click", function(evt){
-	if(!evt.target.classList.contains("open")){
-		evt.target.classList.add("open", "show");
+function cardClick(evt){
+	if(!evt.target.classList.contains("open") && evt.target.tagName === "LI" && !evt.target.classList.contains("active") && flag){
+		movesCounter++;
+		moves.textContent = movesCounter;
+		evt.target.classList.add("open", "show", "active");
+		opened.push(evt.target.firstElementChild);
+		if(opened.length>1){
+			console.log(opened);
+			if(opened[0].classList[1] === opened[1].classList[1]){
+				opened[0].parentElement.classList.add("match");
+				opened[1].parentElement.classList.add("match");
+				flag = false
+				matchCounter++;
+				setTimeout(function(){
+					opened[0].parentElement.classList.remove("active");
+					opened[1].parentElement.classList.remove("active");
+					opened = [];
+					flag = true;
+					if(matchCounter === 8){
+						alert("YoU WiN!!!");
+					}
+				}, 500);
+			} else {
+				opened[0].parentElement.classList.add("fail");
+				opened[1].parentElement.classList.add("fail");
+				flag =  false;
+				setTimeout(function(){
+					opened[0].parentElement.classList.remove("open", "show", "match", "fail", "active");
+					opened[1].parentElement.classList.remove("open", "show", "match", "fail", "active");
+					opened = [];
+					flag = true;
+				}, 500);
+			}	
+		}
+		switch(movesCounter){
+			case 25:
+				stars.removeChild(stars.children[0]);
+				break;
+			case 40:
+				stars.removeChild(stars.children[0]);
+				break;
+		}
 	}
-});
+}
+
+function restartClick(){
+	const fragment = document.createDocumentFragment();
+	const liEl = deck.querySelectorAll("li.card");
+	let indexes = shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);
+	console.log(indexes);
+	movesCounter = 0;
+	matchCounter = 0;
+	moves.textContent = movesCounter;
+	opened = [];
+	for(let i of indexes){
+		liEl[i].classList.remove("open", "show", "match", "fail");
+		fragment.appendChild(liEl[i]);
+	}
+	stars.innerHTML = '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>';
+	deck.innerHTML = "";
+	deck.appendChild(fragment);	
+}
+
+
+restart.addEventListener("click", restartClick);
+
+deck.addEventListener("click", cardClick);
+
+//initial shuffle
+restartClick();
 
 
 /*

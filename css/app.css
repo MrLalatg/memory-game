@@ -116,6 +116,11 @@ h1 {
     margin-bottom: 10px;
 }
 
+.time{
+	text-align: center;
+	margin-left: 40px;
+}
+
 .score-panel .stars {
     margin: 0;
     padding: 0;

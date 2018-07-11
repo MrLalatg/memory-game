@@ -15,10 +15,15 @@ const deck = document.querySelector(".deck");
 const moves = document.querySelector(".moves");
 const restart = document.querySelector(".restart");
 const stars = document.querySelector(".stars");
+const timerDiv = document.querySelector(".time");
 let opened = [];
+let timer;
+let interval;
 let movesCounter = 0;
 //this flag will not allow user to click on cards while animation is performing
 let flag = true;
+//this flag is for setting the timer one time
+let timerFlag = true;
 
 let matchCounter = 0;
 
@@ -56,7 +61,8 @@ function cardClick(evt){
 					opened = [];
 					flag = true;
 					if(matchCounter === 8){
-						alert("You win in " + movesCounter + " moves");
+						timer = 0;
+						alert("You win in " + movesCounter + " moves and in " + timerDiv.textContent + " seconds and get " + stars.children.length + " stars.");
 					}
 				}, 500);
 			} else {
@@ -72,13 +78,27 @@ function cardClick(evt){
 			}	
 		}
 		switch(movesCounter){
-			case 25:
+			case 30:
 				stars.removeChild(stars.children[0]);
 				break;
 			case 40:
 				stars.removeChild(stars.children[0]);
 				break;
 		}
+	}
+
+	if(timerFlag){
+		timer = new Date().getTime();
+
+		interval = setInterval(function(){
+			if(timer === 0){
+				return;
+			}
+
+			timerDiv.textContent = (new Date().getTime()-timer)/1000;
+		}, 100);
+
+		timerFlag = false;
 	}
 }
 
@@ -87,17 +107,20 @@ function restartClick(){
 	const liEl = deck.querySelectorAll("li.card");
 	let indexes = shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);
 	console.log(indexes);
+	timer = 0;
+	timerDiv.textContent = "00:00"
+	timerFlag = true;
 	movesCounter = 0;
 	matchCounter = 0;
 	moves.textContent = movesCounter;
 	opened = [];
 	for(let i of indexes){
-		liEl[i].classList.remove("open", "show", "match", "fail");
+		liEl[i].classList.remove("open", "show", "match", "fail", "active");
 		fragment.appendChild(liEl[i]);
 	}
 	stars.innerHTML = '<li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li><li><i class="fa fa-star"></i></li>';
 	deck.innerHTML = "";
-	deck.appendChild(fragment);	
+	deck.appendChild(fragment);
 }
 
 
@@ -107,6 +130,7 @@ deck.addEventListener("click", cardClick);
 
 //initial shuffle
 restartClick();
+
 
 
 /*

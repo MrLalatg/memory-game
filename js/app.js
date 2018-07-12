@@ -16,6 +16,9 @@ const moves = document.querySelector(".moves");
 const restart = document.querySelector(".restart");
 const stars = document.querySelector(".stars");
 const timerDiv = document.querySelector(".time");
+const winModal = $("#winModal");
+const modalText = document.querySelector("#winText");
+const modalRestart = document.querySelector("#modalRestart");
 let opened = [];
 let timer;
 let interval;
@@ -48,6 +51,19 @@ function cardClick(evt){
 		moves.textContent = movesCounter;
 		evt.target.classList.add("open", "show", "active");
 		opened.push(evt.target.firstElementChild);
+		if(timerFlag){
+			timer = new Date().getTime();
+
+			interval = setInterval(function(){
+				if(timer === 0){
+					return;
+				}
+
+				timerDiv.textContent = (new Date().getTime()-timer)/1000;
+			}, 100);
+
+			timerFlag = false;
+		}
 		if(opened.length>1){
 			console.log(opened);
 			if(opened[0].classList[1] === opened[1].classList[1]){
@@ -62,7 +78,8 @@ function cardClick(evt){
 					flag = true;
 					if(matchCounter === 8){
 						timer = 0;
-						alert("You win in " + movesCounter + " moves and in " + timerDiv.textContent + " seconds and get " + stars.children.length + " stars.");
+						modalText.textContent = "You win in " + movesCounter + " moves and in " + timerDiv.textContent + " seconds and get " + stars.children.length + " stars.";
+						winModal.modal();
 					}
 				}, 500);
 			} else {
@@ -85,20 +102,6 @@ function cardClick(evt){
 				stars.removeChild(stars.children[0]);
 				break;
 		}
-	}
-
-	if(timerFlag){
-		timer = new Date().getTime();
-
-		interval = setInterval(function(){
-			if(timer === 0){
-				return;
-			}
-
-			timerDiv.textContent = (new Date().getTime()-timer)/1000;
-		}, 100);
-
-		timerFlag = false;
 	}
 }
 
@@ -125,6 +128,8 @@ function restartClick(){
 
 
 restart.addEventListener("click", restartClick);
+
+modalRestart.addEventListener("click", restartClick);
 
 deck.addEventListener("click", cardClick);
 

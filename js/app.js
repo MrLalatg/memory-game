@@ -48,7 +48,7 @@ function shuffle(array) {
 function cardClick(evt){
 	if(!evt.target.classList.contains("open") && evt.target.tagName === "LI" && !evt.target.classList.contains("active") && flag){
 		movesCounter++;
-		moves.textContent = movesCounter;
+		moves.textContent = movesCounter + " Moves";
 		evt.target.classList.add("open", "show", "active");
 		opened.push(evt.target.firstElementChild);
 		if(timerFlag){
@@ -115,7 +115,7 @@ function restartClick(){
 	timerFlag = true;
 	movesCounter = 0;
 	matchCounter = 0;
-	moves.textContent = movesCounter;
+	moves.textContent = movesCounter + " Moves";
 	opened = [];
 	for(let i of indexes){
 		liEl[i].classList.remove("open", "show", "match", "fail", "active");

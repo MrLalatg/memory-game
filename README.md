@@ -1,20 +1,22 @@
-# Memory Game Project
+## Memory Game Project
 
-## Table of Contents
+The memory game project is just a normal matching card game, nothing special. 
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+## Installation
 
-## Instructions
+To start working on a code you just need to clone into this reporitory
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+```
+git clone https://github.com/MrLalatg/memory-game.git <name-of-your-directory>
+```
 
-To get started, open `js/app.js` and start building out the app's functionality
+and after you've done that just open index.html in any code editor you want. CSS and JavaScript files are in corresponding directories.
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+## If you want to just play a game
+
+If you just want to try out the game, open index.html in any browser (Tested in google chrome).
+
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+There are no any strict rules, but try to describe why you want to do a pull request, so everyone can understand you.
